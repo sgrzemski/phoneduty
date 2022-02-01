@@ -39,16 +39,27 @@ if (null !== $userID) {
         $time = sprintf("Obecna godzina w ich strefie czasowej to %s.", $user['local_time']->format('g:ia'));
     }
 
-    $twilioResponse = new \Twilio\TwiML\VoiceResponse();
-    $response = sprintf("Osobą odbywającą obecnie dyżur technologiczny jest %s %s. %s "
+
+    if (isset($_GET['call'])) {
+
+        $response = sprintf("Osobą odbywającą obecnie dyżur technologiczny jest %s %s. %s "
         . "Proszę czekać, za chwilę nastąpi przekierowanie.",
         $user['first_name'],
         $user['last_name'],
         $time
         );
 
-    $twilioResponse->say($response, $attributes);
-    $twilioResponse->dial($user['phone_number']);
+        $twilioResponse = new \Twilio\TwiML\VoiceResponse();
+        $twilioResponse->say($response, $attributes);
+        $twilioResponse->dial($user['phone_number']);
+    }
+
+    if (isset($_GET['sms']) {
+
+        $twilioResponse = new \Twilio\TwiML\MessagingResponse();;
+        $twilioResponse->message('Test SMS');
+
+    }
 
     // send response
     if (!headers_sent()) {
