@@ -106,6 +106,7 @@ class Pagerduty {
                     $user = [
                         'full_name'   => $json['user']['name'],
                         'first_name'  => $this->extractFirstName($json['user']['name']),
+                        'last_name'   => $this->extractLastName($json['user']['name']),
                         'local_time'    => $this->getCurrentTimeForTimezone(
                             $this->convertFriendlyTimezoneToFull($json['user']['time_zone'])),
                         'phone_number' => "+{$method['country_code']}{$method['address']}",
@@ -132,6 +133,22 @@ class Pagerduty {
 
         $pieces = explode(' ', $name);
         return $pieces[0];
+    }
+
+    /**
+     * Extract the last name from a full name.
+     *
+     * Perform a a naive split on the full name by space, assume
+     * the second piece is the last name.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function extractLastName($name) {
+
+        $pieces = explode(' ', $name);
+        return $pieces[1];
     }
 
     /**
