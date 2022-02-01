@@ -31,18 +31,19 @@ if (null !== $userID) {
 
     $attributes = [
         'voice' => 'man',
-        'language' => 'en'
+        'language' => 'pl-pl'
     ];
 
     $time = "";
     if ($announceTime && $user['local_time']) {
-        $time = sprintf("The current time in their timezone is %s.", $user['local_time']->format('g:ia'));
+        $time = sprintf("Obecna godzina w ich strefie czasowej to %s.", $user['local_time']->format('g:ia'));
     }
 
     $twilioResponse = new \Twilio\TwiML\VoiceResponse();
-    $response = sprintf("The current on-call engineer is %s. %s "
-        . "Please hold while we connect you.",
+    $response = sprintf("Osobą odbywającą obecnie dyżur technologiczny jest %s %s. %s "
+        . "Proszę czekać, za chwilę nastąpi przekierowanie.",
         $user['first_name'],
+        $user['last_name'],
         $time
         );
 
